@@ -1,65 +1,91 @@
 package br.com.artius.view.console;
 
-import br.com.artius.controller.Calculadora;
-import br.com.artius.operacao.Simbolo;
+import br.com.artius.Calculadora;
 
 import java.util.Scanner;
 
 public class CalculadoraConsole {
+
+    private final Scanner sc;
+    private final MensagemConsole mensagem;
     private final Calculadora calculadora;
-    private final Scanner scanner;
-    private final MensagemConsole msgConsole;
 
-    public CalculadoraConsole() {
-        this.calculadora = new Calculadora();
-        this.scanner = new Scanner(System.in);
-        this.msgConsole = new MensagemConsole();
-        this.msgConsole.nomeCalculadora();
+    public CalculadoraConsole(final Scanner sc, final MensagemConsole mensagem, final Calculadora calculadora) {
+        this.sc = sc;
+        this.mensagem = mensagem;
+        this.calculadora = calculadora;
     }
 
-    public void getCalculadora() {
-        msgConsole.operacoesPossiveis();
-        Simbolo simbolo = getOperacao();
-        Double resultado;
+    public void somar() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
 
-        if (simbolo == null)
-            return;
+        mensagem.perguntarNumero(2);
+        double num2 = sc.nextDouble();
 
-        resultado = getResposta(simbolo);
-        msgConsole.showResultado(resultado);
+        mensagem.mostrarResultado(calculadora.somar(num1, num2));
     }
 
-    private Simbolo getOperacao() {
-        final String op;
-        final Simbolo simbolo;
+    public void subtrair() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
 
-        op = scanner.nextLine();
-        simbolo = Simbolo.valueOf(op.charAt(0));
+        mensagem.perguntarNumero(2);
+        double num2 = sc.nextDouble();
 
-        if (op.equals("!q"))
-            fechaCalculadora();
+        mensagem.mostrarResultado(calculadora.subtrair(num1, num2));
+    }
+    public void multiplicar() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
 
-        if (simbolo == null)
-            msgConsole.erroOperacaoNaoEncontrada();
-        return simbolo;
+        mensagem.perguntarNumero(2);
+        double num2 = sc.nextDouble();
+
+        mensagem.mostrarResultado(calculadora.multiplicar(num1, num2));
+    }
+    public void dividir() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
+
+        mensagem.perguntarNumero(2);
+        double num2 = sc.nextDouble();
+
+        mensagem.mostrarResultado(calculadora.dividir(num1, num2));
     }
 
-    private Double getValor(int contador) {
-        msgConsole.numero(contador);
-        return scanner.nextDouble();
+    public void potencia() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
+
+        mensagem.perguntarNumero(2);
+        double num2 = sc.nextDouble();
+
+        mensagem.mostrarResultado(calculadora.potencia(num1, num2));
     }
 
-    private Double getResposta(Simbolo simbolo) {
-        Double d1, d2;
-        d1 = getValor(1);
-        d2 = getValor(2);
+    public void raiz() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
 
-        return calculadora.getOperacao(simbolo, d1, d2);
+        mensagem.perguntarNumero(2);
+        double num2 = sc.nextDouble();
+
+        mensagem.mostrarResultado(calculadora.raiz(num1, num2));
     }
 
-    private void fechaCalculadora() {
-        msgConsole.mensagemSaida();
-        System.exit(0);
+    public void raizQuadrada() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
+
+        mensagem.mostrarResultado(calculadora.raizQuadrada(num1));
+    }
+
+    public void fatorial() {
+        mensagem.perguntarNumero(1);
+        double num1 = sc.nextDouble();
+
+        mensagem.mostrarResultado(calculadora.fatorial(num1));
     }
 
 }
